@@ -50,13 +50,12 @@ Putting that all together we get:
 ```
 WORKDIR="/work"
 docker run -t --rm \
-       -u "$(id -u):$(id -g)"
-       -e "HOME=${WORKDIR}"
-       -e "PKG_CONFIG_ALLOW_CROSS=1"
-       -w "${WORKDIR}"
-       -v "$(pwd):${WORKDIR}"
-       -v "${HOME}/.cargo/registry:/usr/local/cargo/registry"
-       mdirkse/rust_armv6:latest
+       -u "$(id -u):$(id -g)" \
+       -e "HOME=${WORKDIR}" \
+       -w "${WORKDIR}" \
+       -v "$(pwd):${WORKDIR}" \
+       -v "${HOME}/.cargo/registry:/usr/local/cargo/registry" \
+       gedweb/rust_armv6:latest
 ```
 
 Copy and paste at will or use the link:compile_armv6.sh[script included with this repo].

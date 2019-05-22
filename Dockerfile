@@ -1,4 +1,4 @@
-FROM rust:1.32.0-slim-stretch
+FROM rustlang/rust:nightly
 
 # Prevent any error messages about there not being a terminal
 ENV DEBIAN_FRONTEND noninteractive
@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
 # RPI tools dir
 ENV RPI_TOOLS=/rpi_tools
+ENV PKG_CONFIG_ALLOW_CROSS=1
 
 # Enable the armhf arch
 RUN dpkg --add-architecture armhf
@@ -29,6 +30,7 @@ RUN apt-get update -qq && \
     apt-get clean -qq && rm -fr /var/lib/apt/* /var/cache/apt/*
 
 # Enable arm v6 in Rust
-RUN rustup target add arm-unknown-linux-gnueabihf
+RUN rustup default nightly \
+    && rustup target add arm-unknown-linux-gnueabihf
 
 CMD cargo build --release --target=arm-unknown-linux-gnueabihf
